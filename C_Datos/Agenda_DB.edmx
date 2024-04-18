@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AgendaVirtual_db.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contactos">
+          <Key>
+            <PropertyRef Name="ContactoId" />
+          </Key>
+          <Property Name="ContactoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" />
+          <Property Name="Nombre_Contacto" Type="varchar" MaxLength="30" />
+          <Property Name="Apellido_Contacto" Type="varchar" MaxLength="30" />
+          <Property Name="Numero_Contacto" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Correo_Contacto" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserAgenda">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Pass" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Contactos__userI__4D94879B">
+          <End Role="UserAgenda" Type="Self.UserAgenda" Multiplicity="0..1" />
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAgenda">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Contactos">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AgendaVirtual_dbStoreContainer">
+          <EntitySet Name="Contactos" EntityType="Self.Contactos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAgenda" EntityType="Self.UserAgenda" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Contactos__userI__4D94879B" Association="Self.FK__Contactos__userI__4D94879B">
+            <End Role="UserAgenda" EntitySet="UserAgenda" />
+            <End Role="Contactos" EntitySet="Contactos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AgendaVirtual_db" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Contactos">
+          <Key>
+            <PropertyRef Name="ContactoId" />
+          </Key>
+          <Property Name="ContactoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="Nombre_Contacto" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Apellido_Contacto" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Numero_Contacto" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo_Contacto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserAgenda" Relationship="Self.FK__Contactos__userI__4D94879B" FromRole="Contactos" ToRole="UserAgenda" />
+        </EntityType>
+        <EntityType Name="UserAgenda">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Contactos" Relationship="Self.FK__Contactos__userI__4D94879B" FromRole="UserAgenda" ToRole="Contactos" />
+        </EntityType>
+        <Association Name="FK__Contactos__userI__4D94879B">
+          <End Role="UserAgenda" Type="Self.UserAgenda" Multiplicity="0..1" />
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAgenda">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="Contactos">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AgendaVirtualEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Contactos" EntityType="Self.Contactos" />
+          <EntitySet Name="UserAgenda" EntityType="Self.UserAgenda" />
+          <AssociationSet Name="FK__Contactos__userI__4D94879B" Association="Self.FK__Contactos__userI__4D94879B">
+            <End Role="UserAgenda" EntitySet="UserAgenda" />
+            <End Role="Contactos" EntitySet="Contactos" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AgendaVirtual_dbStoreContainer" CdmEntityContainer="AgendaVirtualEntities">
+          <EntitySetMapping Name="Contactos">
+            <EntityTypeMapping TypeName="AgendaVirtual_db.Contactos">
+              <MappingFragment StoreEntitySet="Contactos">
+                <ScalarProperty Name="ContactoId" ColumnName="ContactoId" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="Nombre_Contacto" ColumnName="Nombre_Contacto" />
+                <ScalarProperty Name="Apellido_Contacto" ColumnName="Apellido_Contacto" />
+                <ScalarProperty Name="Numero_Contacto" ColumnName="Numero_Contacto" />
+                <ScalarProperty Name="Correo_Contacto" ColumnName="Correo_Contacto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAgenda">
+            <EntityTypeMapping TypeName="AgendaVirtual_db.UserAgenda">
+              <MappingFragment StoreEntitySet="UserAgenda">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
